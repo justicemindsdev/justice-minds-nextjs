@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply font-sans text-text-dark leading-relaxed bg-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  /* Guardian-style components will be defined here */
+  .guardian-hero {
+    @apply font-serif text-4xl lg:text-5xl leading-tight font-bold;
+  }
+
+  .guardian-deck {
+    @apply text-xl text-text-grey leading-relaxed;
+  }
+
+  .guardian-nav {
+    @apply sticky top-0 z-[1000] bg-primary-blue border-t border-white/10 border-b-4 border-accent-red shadow-lg;
+  }
+}
+
+@layer utilities {
+  .container-guardian {
+    @apply max-w-[1280px] mx-auto px-8 py-12;
+  }
+}
