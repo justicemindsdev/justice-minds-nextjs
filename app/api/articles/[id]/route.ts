@@ -4,12 +4,13 @@ import { supabaseAdmin } from '@/lib/supabase'
 // GET single article by ID
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   const { data, error } = await supabaseAdmin
     .from('articles')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error) {
@@ -22,15 +23,16 @@ export async function GET(
 // PUT update article
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const updates = await request.json()
 
     const { data, error } = await supabaseAdmin
       .from('articles')
       .update(updates)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single()
 
@@ -39,7 +41,7 @@ export async function PUT(
     }
 
     return NextResponse.json(data)
-  } catch (error) {
+  } catch (error: unknown) {
     return NextResponse.json(
       { error: 'Invalid request body' },
       { status: 400 }
@@ -50,12 +52,13 @@ export async function PUT(
 // DELETE article
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   const { error } = await supabaseAdmin
     .from('articles')
     .delete()
-    .eq('id', params.id)
+    .eq('id', id)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
